@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/i18n/context';
+import GlassIcons from '@/components/GlassIcons';
 import {
   GraduationCap,
   ShieldCheck,
@@ -73,8 +74,24 @@ export default function HomePage() {
         {/* Student Flow */}
         <div className="glow-card p-6 sm:p-7 flex flex-col justify-between space-y-5">
           <div>
-            <div className="w-12 h-12 rounded-xl bg-[#D62828] text-white flex items-center justify-center mb-4 shadow-sm shadow-[#D62828]/25">
-              <GraduationCap className="w-6 h-6" />
+            <div className="mb-4">
+              <GlassIcons
+                items={[{ icon: <GraduationCap className="w-5 h-5 text-white" />, color: 'red' }]}
+                size={46}
+                roundness={0.32}
+                hover="lift"
+                plate="tilt"
+                tilt={20}
+                spread={0.35}
+                frost={0.2}
+                shine={0.65}
+                refraction={0.3}
+                theme="light"
+                labels="none"
+                iconColor="#FFFFFF"
+                intro={false}
+                className="!mx-0 !justify-start"
+              />
             </div>
             <h2 className="text-base font-bold text-[#111827]">
               Student Experience (Mobile-First)
@@ -108,8 +125,24 @@ export default function HomePage() {
         {/* Management Reviewer */}
         <div className="glow-card p-6 sm:p-7 flex flex-col justify-between space-y-5">
           <div>
-            <div className="w-12 h-12 rounded-xl bg-[#D62828] text-white flex items-center justify-center mb-4 shadow-sm shadow-[#D62828]/25">
-              <ShieldCheck className="w-6 h-6" />
+            <div className="mb-4">
+              <GlassIcons
+                items={[{ icon: <ShieldCheck className="w-5 h-5 text-white" />, color: 'red' }]}
+                size={46}
+                roundness={0.32}
+                hover="lift"
+                plate="tilt"
+                tilt={20}
+                spread={0.35}
+                frost={0.2}
+                shine={0.65}
+                refraction={0.3}
+                theme="light"
+                labels="none"
+                iconColor="#FFFFFF"
+                intro={false}
+                className="!mx-0 !justify-start"
+              />
             </div>
             <h2 className="text-base font-bold text-[#111827]">
               Management Reviewer (Desktop-First)
@@ -143,8 +176,24 @@ export default function HomePage() {
         {/* Admin Config Engine */}
         <div className="glow-card p-6 sm:p-7 flex flex-col justify-between space-y-5">
           <div>
-            <div className="w-12 h-12 rounded-xl bg-[#D62828] text-white flex items-center justify-center mb-4 shadow-sm shadow-[#D62828]/25">
-              <FileCode2 className="w-6 h-6" />
+            <div className="mb-4">
+              <GlassIcons
+                items={[{ icon: <FileCode2 className="w-5 h-5 text-white" />, color: 'red' }]}
+                size={46}
+                roundness={0.32}
+                hover="lift"
+                plate="tilt"
+                tilt={20}
+                spread={0.35}
+                frost={0.2}
+                shine={0.65}
+                refraction={0.3}
+                theme="light"
+                labels="none"
+                iconColor="#FFFFFF"
+                intro={false}
+                className="!mx-0 !justify-start"
+              />
             </div>
             <h2 className="text-base font-bold text-[#111827]">
               Admin &amp; Config Studio
