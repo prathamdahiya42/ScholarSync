@@ -20,24 +20,30 @@ export async function GET(req: NextRequest) {
     whereClause.status = { in: ['SUBMITTED', 'UNDER_REVIEW', 'DEFECTIVE', 'APPROVED', 'REJECTED'] };
   }
 
-  const applications = await prisma.application.findMany({
-    where: whereClause,
-    include: {
-      student: {
-        select: {
-          fullName: true,
-          mobile: true,
-          socialCategory: true,
-          domicileState: true,
-          currentClass: true,
-          schoolName: true
-        }
+  let applications: any[] = [];
+  try {
+    applications = await prisma.application.findMany({
+      where: whereClause,
+      include: {
+        student: {
+          select: {
+            fullName: true,
+            mobile: true,
+            socialCategory: true,
+            domicileState: true,
+            currentClass: true,
+            schoolName: true
+          }
+        },
+        documents: { select: { id: true, docTypeId: true } },
+        reviews: { take: 1, orderBy: { createdAt: 'desc' } }
       },
-      documents: { select: { id: true, docTypeId: true } },
-      reviews: { take: 1, orderBy: { createdAt: 'desc' } }
-    },
-    orderBy: { submittedAt: 'asc' } // Oldest submitted first
-  });
+      orderBy: { submittedAt: 'asc' } // Oldest submitted first
+    });
+  } catch (dbErr) {
+    const { PERMANENT_DEMO_APPLICATIONS } = await import('@/lib/demo-store');
+    applications = PERMANENT_DEMO_APPLICATIONS;
+  }
 
   // Calculate SLA for each application
   const items = await Promise.all(

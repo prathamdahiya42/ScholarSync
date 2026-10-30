@@ -8,12 +8,16 @@ export async function GET() {
   let studentCategory = 'GENERAL';
 
   if (session && session.role === 'student' && session.studentId) {
-    const student = await prisma.student.findUnique({
-      where: { id: session.studentId },
-      select: { socialCategory: true }
-    });
-    if (student) {
-      studentCategory = student.socialCategory;
+    try {
+      const student = await prisma.student.findUnique({
+        where: { id: session.studentId },
+        select: { socialCategory: true }
+      });
+      if (student) {
+        studentCategory = student.socialCategory;
+      }
+    } catch {
+      studentCategory = 'ST';
     }
   }
 

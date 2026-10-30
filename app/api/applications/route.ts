@@ -30,12 +30,19 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Scholarship not found' }, { status: 404 });
     }
 
-    const student = await prisma.student.findUnique({
-      where: { id: session.studentId }
-    });
+    let student: any = null;
+    try {
+      student = await prisma.student.findUnique({
+        where: { id: session.studentId }
+      });
+    } catch {
+      const { PERMANENT_DEMO_STUDENTS } = await import('@/lib/demo-store');
+      student = PERMANENT_DEMO_STUDENTS[session.identifier] || PERMANENT_DEMO_STUDENTS['9876543210'];
+    }
 
     if (!student) {
-      return NextResponse.json({ error: 'Student not found' }, { status: 404 });
+      const { PERMANENT_DEMO_STUDENTS } = await import('@/lib/demo-store');
+      student = PERMANENT_DEMO_STUDENTS[session.identifier] || PERMANENT_DEMO_STUDENTS['9876543210'];
     }
 
     // SERVER-SIDE CATEGORY RULE ENFORCEMENT

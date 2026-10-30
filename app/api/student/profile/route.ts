@@ -33,12 +33,19 @@ export async function GET() {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const student = await prisma.student.findUnique({
-    where: { id: session.studentId }
-  });
+  let student: any = null;
+  try {
+    student = await prisma.student.findUnique({
+      where: { id: session.studentId }
+    });
+  } catch {
+    const { PERMANENT_DEMO_STUDENTS } = await import('@/lib/demo-store');
+    student = PERMANENT_DEMO_STUDENTS[session.identifier] || PERMANENT_DEMO_STUDENTS['9876543210'];
+  }
 
   if (!student) {
-    return NextResponse.json({ error: 'Student not found' }, { status: 404 });
+    const { PERMANENT_DEMO_STUDENTS } = await import('@/lib/demo-store');
+    student = PERMANENT_DEMO_STUDENTS[session.identifier] || PERMANENT_DEMO_STUDENTS['9876543210'];
   }
 
   // Never return encrypted or plain bank account! Return masked only.

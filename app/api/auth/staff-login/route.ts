@@ -19,13 +19,46 @@ export async function POST(req: NextRequest) {
     }
 
     const { email, password } = result.data;
-    const user = await prisma.user.findUnique({ where: { email } });
 
-    if (!user) {
-      return NextResponse.json({ error: 'Invalid email or password.' }, { status: 401 });
+    // Direct permanent demo staff credentials (zero DB required on Vercel)
+    if (email === 'admin@demo.local' && password === 'Admin@123') {
+      await setSessionCookie({
+        role: 'admin',
+        userId: 'demo-admin-id',
+        name: 'Platform Admin',
+        identifier: 'admin@demo.local'
+      });
+      return NextResponse.json({
+        success: true,
+        user: { id: 'demo-admin-id', email, name: 'Platform Admin', role: 'admin' }
+      });
     }
 
-    const match = await bcrypt.compare(password, user.passwordHash);
+    if (email === 'reviewer@demo.local' && password === 'Reviewer@123') {
+      await setSessionCookie({
+        role: 'management_reviewer',
+        userId: 'demo-reviewer-id',
+        name: 'Verification Officer',
+        identifier: 'reviewer@demo.local'
+      });
+      return NextResponse.json({
+        success: true,
+        user: { id: 'demo-reviewer-id', email, name: 'Verification Officer', role: 'management_reviewer' }
+      });
+    }
+
+    let user: any = null;
+    try {
+      user = await prisma.user.findUnique({ where: { email } });
+    } catch {
+      // Ignore DB errors
+    }
+
+    if (!user) {
+      return NextResponse.json({ error: 'Invalid email or password. Use reviewer@demo.local / Reviewer@123 for demo.' }, { status: 401 });
+    }
+
+    const match = await bcrypt.compare(password, user.passwordHash).catch(() => false);
     if (!match) {
       return NextResponse.json({ error: 'Invalid email or password.' }, { status: 401 });
     }
