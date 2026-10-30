@@ -1,0 +1,322 @@
+{
+  "meta": {
+    "prepared_on": "2026-10-29",
+    "purpose": "Demo/prototype seed data: configurable scheme rules for 4 real Ministry of Tribal Affairs (MoTA) schemes for ST students",
+    "caveats": [
+      "Post Matric regulations are 'applicable from 01-04-2022'. NFST / Top Class / NOS guidelines in hand cover 2021-22 to 2025-26. Check tribal.gov.in for any 2026-27 revision before claiming 'current' in front of judges.",
+      "NFST fellowship rates are pegged to UGC rates and may have been revised after 1 April 2022.",
+      "NOS benefit amounts (living allowance, contingency, airfare caps) were NOT in the documents read; left as null on purpose.",
+      "Top Class institute list: 265 institutes (revised list, 2023-24 onwards). Older documents say 252/158; use 265."
+    ],
+    "sources": [
+      "PMS ST Regulations (applicable 01-04-2022): https://tribalwelfare.goa.gov.in/wp-content/uploads/2025/04/Post-Matric.pdf",
+      "MoTA Guidelines, National Fellowship & Scholarship for Higher Education of ST Students 2021-22 to 2025-26: https://iitj.ac.in/PageImages/Gallery/03-2025/National-Scholarship-for-Higher-Education-of-ST-students-638766146772781079.pdf",
+      "MoTA FAQs National Overseas Scholarship 2025-26: https://tribal.nic.in/downloads/faqs/FAQs-NOS-2025-26.pdf",
+      "Lok Sabha reply with income ceilings (ST): https://eparlib.nic.in/bitstream/123456789/711424/1/9499.pdf"
+    ]
+  },
+
+  "shared_rules": {
+    "income_definition": "Gross income from all sources, no exemptions or deductions under Income Tax Act",
+    "income_computation": {
+      "both_parents_earning": "Combine father + mother income",
+      "other_family_members": "Siblings/other earners NOT counted",
+      "single_surviving_parent": "Only that parent's income",
+      "orphan_with_guardian": "Income criterion does not apply",
+      "married_applicant_top_class_only": "Spouse income is added"
+    },
+    "one_scholarship_at_a_time": true,
+    "false_statement_penalty": "Award cancelled, amount recovered, blacklisted from all schemes",
+    "payment": "DBT to Aadhaar-seeded bank account in the student's own name, mobile number linked",
+    "cross_document_checks": [
+      "Applicant name identical across ST certificate, income certificate, marksheet, bank passbook, Aadhaar",
+      "Date of birth identical across Aadhaar, 10th certificate, application form",
+      "Income certificate financial year = FY preceding the selection/admission year (salaried: Form-16 of previous FY acceptable)",
+      "Income certificate must come from a competent authority (e.g. Tehsildar/DM/Executive Magistrate); self-declaration or affidavit NOT accepted (PMS); monthly income certificate not accepted (NOS)",
+      "ST community name must match the notified ST list of the state (NOS: spelling must match latest Gazette notification)",
+      "CGPA marksheets must come with the institute's CGPA-to-percentage conversion"
+    ]
+  },
+
+  "schemes": [
+    {
+      "id": "PMS-ST",
+      "name": "Post Matric Scholarship for ST Students",
+      "ministry": "Ministry of Tribal Affairs",
+      "type": "Centrally Sponsored Scheme (GoI 75% / State 25%; NE & hilly states 90/10)",
+      "level": "Class XI to Post Graduation",
+      "implementing_body": "State/UT Government of the student's domicile state",
+      "portal": "State scholarship portal or National Scholarship Portal (scholarships.gov.in)",
+      "eligibility": {
+        "category": "Scheduled Tribe of the domicile State/UT",
+        "income_ceiling_inr_per_year": 250000,
+        "min_marks_pct": null,
+        "must_have_passed": "Matriculation / Higher Secondary or higher exam from recognised board/university",
+        "bank": "Valid scheduled-bank account linked with Aadhaar and mobile",
+        "exclusions": [
+          "Already receiving any other scholarship",
+          "Studying in a Top Class institute covered by the National Scholarship (Top Class) scheme (dedupe rule)",
+          "Completed one stream and now taking a different stream (e.g. B.Com after B.A.)"
+        ],
+        "institution_types": [
+          "Government institutes/colleges/universities",
+          "Institutions of National Importance",
+          "UGC 2(f)/12(B) universities and colleges, deemed universities",
+          "Private universities with NAAC/NBA 'A' level or equivalent",
+          "Private professional institutions affiliated to recognised university",
+          "Govt/aided schools for Class XI-XII",
+          "Recognised diploma institutes, NCVT-affiliated vocational institutes",
+          "MCI/AICTE etc. approved institutions"
+        ]
+      },
+      "benefit": {
+        "components": ["Compulsory non-refundable fee", "Monthly stipend"],
+        "fee_rule": "Fixed by State Level Fee Fixation Committee. GoI support ceiling in private institutes per year: Engineering 250000; MBBS/MS/MD 600000; other courses 100000",
+        "stipend_inr": {
+          "Group I (professional degree/PG/MPhil/PhD)": {"hosteller_monthly": 1200, "hosteller_annual": 12000, "day_scholar_monthly": 550, "day_scholar_annual": 5500},
+          "Group II (non-professional BA/BSc/BCom/MA/MSc/MCom)": {"hosteller_monthly": 820, "hosteller_annual": 8200, "day_scholar_monthly": 530, "day_scholar_annual": 5300},
+          "Group III (vocational, ITI, 3-yr polytechnic diploma)": {"hosteller_monthly": 570, "hosteller_annual": 5700, "day_scholar_monthly": 300, "day_scholar_annual": 3000},
+          "Group IV (Class XI-XII and other post-matric non-degree)": {"hosteller_monthly": 380, "hosteller_annual": 3800, "day_scholar_monthly": 230, "day_scholar_annual": 2300}
+        },
+        "disability_allowance_inr_monthly": {"hosteller": 800, "day_scholar": 600},
+        "disability_note": "Also applies to leprosy-cured and sickle cell anaemia/thalassemia students",
+        "stipend_duration": "Max 10 months per academic year"
+      },
+      "documents": [
+        {"id": "aadhaar", "name": "Aadhaar number", "required": true},
+        {"id": "domicile", "name": "Domicile certificate", "required": true},
+        {"id": "qualifying_certs", "name": "Certificates/marksheets of all examinations passed", "required": true},
+        {"id": "last_marks", "name": "Last qualified marks (% or CGPA equivalent)", "required": true},
+        {"id": "st_cert", "name": "ST certificate from competent authority of State/UT", "required": true},
+        {"id": "income_cert", "name": "Family income certificate (once, at admission; valid for whole course)", "required": true, "note": "Self-declaration/affidavit not acceptable"},
+        {"id": "disability_cert", "name": "Disability certificate", "required": false},
+        {"id": "photo", "name": "Passport size photograph", "required": true},
+        {"id": "bank", "name": "Aadhaar-linked bank account details (student's name, IFSC)", "required": true}
+      ],
+      "workflow": [
+        "Student registers and applies online",
+        "Level 1: Institute Nodal Officer verifies against physical documents (verify / reject / mark defective, with reason)",
+        "Level 2/3: District/State Nodal Officer verifies (verify / defective / reject)",
+        "State sanctions and disburses via DBT",
+        "Ministry monitors via DBT portal (dbttribal.gov.in)"
+      ],
+      "suggested_timeline": {
+        "student_registration": "1 April - 30 September (fresh and renewal)",
+        "institute_verification_complete": "30 October",
+        "state_verification_complete": "15 November",
+        "disbursement": "Fresh: 31 December; Renewal: 15 November"
+      },
+      "renewal": [
+        "Renewed year to year if previous class passed and promoted",
+        "Failed students get nothing until they clear the class and are promoted",
+        "Fresh income certificate NOT required at renewal",
+        "Good conduct and regular attendance required",
+        "Cancelled if student changes course/institute without State approval, or on false statements"
+      ],
+      "ocr_deficiency_flags": [
+        "Income certificate missing / over ceiling / wrong FY / affidavit instead of certificate",
+        "ST certificate community not in domicile state's ST list",
+        "Bank account holder name does not match applicant",
+        "Marksheet shows CGPA with no conversion formula",
+        "Institute AISHE/U-DISE code missing or institute not empanelled",
+        "Applicant's institute is in the Top Class list (route to Top Class scheme instead)"
+      ]
+    },
+
+    {
+      "id": "NS-TOPCLASS-ST",
+      "name": "National Scholarship for Higher Education of ST Students (Top Class)",
+      "ministry": "Ministry of Tribal Affairs",
+      "type": "Central Sector Scheme (100% central funding), sub-scheme of 'National Fellowship & Scholarship for Higher Education of ST Students'",
+      "level": "Graduate and Post Graduate in notified premier institutes (IITs, NITs, IIMs, AIIMS, NLUs, NIFT, etc.)",
+      "portal": "National Scholarship Portal (scholarships.gov.in)",
+      "eligibility": {
+        "category": "Scheduled Tribe / PVTG",
+        "income_ceiling_inr_per_year": 600000,
+        "min_marks_pct": null,
+        "admission": "Merit admission to a notified institute and notified course (list of 265 institutes)",
+        "exclusions": [
+          "Management-quota students in private institutes",
+          "Anyone claiming any other Central/State scholarship for the same study"
+        ],
+        "slots": "No institute-wise, state-wise or stream-wise ceiling"
+      },
+      "benefit": {
+        "tuition_and_admission_fee": "Full for government institutes; ceiling 250000 per year in private institutes",
+        "books_stationery_inr_per_year": 5000,
+        "stipend_inr_per_month": 3000,
+        "computer_and_accessories_inr_one_time": 45000,
+        "note": "Books and computer paid without bills/vouchers. Tuition goes to institute via PFMS, or reimbursed to student on receipt. Rest paid by DBT, once a year."
+      },
+      "documents": [
+        {"id": "st_cert", "name": "ST / PVTG certificate (signed and stamped)", "fresh": true, "renewal": false},
+        {"id": "income_cert", "name": "Income certificate for FY preceding selection year (Form-16 for salaried)", "fresh": true, "renewal": false},
+        {"id": "fee_receipt", "name": "Fee receipt", "fresh": true, "renewal": true},
+        {"id": "bank_passbook", "name": "Bank passbook scan (name must match application)", "fresh": true, "renewal": true},
+        {"id": "marksheet", "name": "Qualifying marksheet: 12th (UG) or graduation (PG); renewal: last passed semester", "fresh": true, "renewal": true},
+        {"id": "bonafide", "name": "Bonafide certificate from institute", "fresh": true, "renewal": true}
+      ],
+      "workflow": [
+        "Student registers on NSP and applies after taking admission",
+        "Institute Nodal Officer verifies uploaded documents against physical copies and confirms genuineness of certificates (no verification fee)",
+        "Ministry verifies; discrepancies marked 'defective' and visible to student",
+        "Student corrects, institute re-verifies, Ministry final verification",
+        "Selection list published on MoTA website; Ministry decision final",
+        "Payment via PFMS; institute submits Utilisation Certificate (GFR-12A)"
+      ],
+      "renewal": "Continues to end of course subject to satisfactory performance certified by institute; income certificate taken once at admission",
+      "ocr_deficiency_flags": [
+        "Institute not in the 265 notified list, or course not notified",
+        "Admission under management quota",
+        "Income above 6,00,000 or certificate for wrong FY",
+        "Bank passbook name mismatch",
+        "Fee receipt missing or not matching bonafide"
+      ]
+    },
+
+    {
+      "id": "NFST",
+      "name": "National Fellowship for Higher Education of ST Students (NFST)",
+      "ministry": "Ministry of Tribal Affairs",
+      "type": "Central Sector Scheme, fellowship sub-scheme",
+      "level": "M.Phil / Ph.D after Master's degree",
+      "portal": "https://fellowship.tribal.gov.in (usually opens ~1 July, closes ~30 September); Aadhaar + DigiLocker registration mandatory",
+      "eligibility": {
+        "category": "Scheduled Tribe / PVTG",
+        "income_ceiling_inr_per_year": null,
+        "income_note": "No income criterion",
+        "min_marks_pct": 55,
+        "marks_note": "At final PG examination",
+        "age_max": 36,
+        "age_reference_date": "1 July of the award year",
+        "mode": "Regular, full-time M.Phil/Ph.D in UGC 2(f)/12(B) institutions, UGC-grant deemed universities, grant-receiving institutions, Institutes of National Importance",
+        "exclusions": ["Any other fellowship/scholarship for the same study"]
+      },
+      "slots": {
+        "total_per_year": 750,
+        "reservation_priority": [
+          {"category": "Divyangjan (min 40% disability)", "slots": 38},
+          {"category": "PVTG", "slots": 25},
+          {"category": "Female (includes Divyangjan and PVTG women)", "slots": 225},
+          {"category": "ST others", "slots": 462}
+        ],
+        "unfilled_rule": "Vacant slots cascade to the next category; remaining applicants ranked on PG marks",
+        "priority_note": "Applicants with admission offers from IITs/AIIMS/IIMs/IISERs get priority"
+      },
+      "benefit": {
+        "rates_note": "Equal to UGC rates; verify against latest UGC revision",
+        "monthly_fellowship_inr": {
+          "M.Phil (Humanities & Social Sciences)": 31000,
+          "Ph.D (first 2 years)": 31000,
+          "Ph.D (remaining 3 years)": 35000
+        },
+        "annual_contingency_inr": {
+          "M.Phil Humanities/Social Sciences": 10000,
+          "M.Phil Science/Engg/Tech": 12000,
+          "Ph.D Humanities/Social Sciences": 20500,
+          "Ph.D Science/Engg/Tech": 25000
+        },
+        "hra": "8% / 16% / 24% by city class (UGC rates); not payable if university hostel provided",
+        "escort_allowance_divyangjan_inr_monthly": 2000,
+        "tenure": "M.Phil 2 years; Ph.D or M.Phil+Ph.D 5 years max",
+        "payment": "Quarterly via PFMS; last quarter released only after thesis uploaded to repository.tribal.gov.in"
+      },
+      "documents": [
+        {"id": "photo", "name": "Latest coloured passport size photograph", "required": true},
+        {"id": "st_cert", "name": "ST/PVTG certificate from competent authority", "required": true},
+        {"id": "dob_proof", "name": "10th/Matriculation certificate for date of birth", "required": true},
+        {"id": "disability_cert", "name": "Divyangjan certificate", "required": false},
+        {"id": "pg_marksheet", "name": "Post-graduation marksheet (aggregate %; CGPA conversion formula if applicable)", "required": true},
+        {"id": "admission_letter", "name": "Admission/joining certificate for M.Phil/Ph.D from university", "required": true},
+        {"id": "offer_letter", "name": "Admission offer letter (IIT/AIIMS/IIM/IISER candidates)", "required": false}
+      ],
+      "workflow": [
+        "Scholar registers on fellowship portal (Aadhaar + DigiLocker)",
+        "University Nodal Officer verifies physical documents against portal upload",
+        "Ministry verifies; defective applications returned to student, corrected, re-verified by university",
+        "Merit list on PG marks within category slots; Ministry Selection Committee (Secretary MoTA chair, JS&FA, JS Scholarship, MoSJE and UGC representatives)",
+        "Provisional award; scholar must join and submit joining report within 1 month",
+        "Post-selection: refund of any other fellowship, NOC, quarterly continuation certificates (10 Jul, 10 Oct, 10 Jan, 10 Apr), annual progress report"
+      ],
+      "ocr_deficiency_flags": [
+        "PG aggregate below 55% or CGPA without conversion",
+        "Age above 36 on 1 July (computed from 10th certificate DOB)",
+        "ST/PVTG certificate missing or illegible",
+        "No admission/joining certificate for M.Phil/Ph.D",
+        "Disability claimed but certificate below 40% or missing",
+        "Part-time / non-regular course"
+      ]
+    },
+
+    {
+      "id": "NOS-ST",
+      "name": "National Overseas Scholarship for ST Students",
+      "ministry": "Ministry of Tribal Affairs",
+      "type": "Central Sector Scheme",
+      "level": "Master's, Ph.D, Post-doctoral abroad (top 1000 QS World Ranking institutions)",
+      "portal": "https://overseas.tribal.gov.in",
+      "eligibility": {
+        "category": "Scheduled Tribe / PVTG",
+        "income_ceiling_inr_per_year": 600000,
+        "income_note": "Parents'/family income from all sources. Certificate must be annual (monthly not accepted). If father alive but income not reported, a declaration giving the reason is required",
+        "age_max_by_level": {"Masters": 32, "PhD": 35, "PostDoc": 38},
+        "age_reference_date": "1 July of selection year",
+        "min_marks_pct_by_level": {"Masters": "55% in Bachelor's", "PhD": "55% in Master's", "PostDoc": "55% in Master's with Ph.D completion certificate"},
+        "marks_waiver": "55% criterion does not apply to candidates already admitted in a top-1000 QS institution",
+        "one_child_rule": "Only one child of the same parents; one-time assistance",
+        "exclusions": ["Cannot hold State and Central scholarship together"]
+      },
+      "slots": {
+        "total_per_year": 20,
+        "category": {"ST": 17, "PVTG": 3},
+        "female_earmarked": 6,
+        "female_note": "Unfilled female slots may go to male candidates",
+        "by_field": {"STEM": 10, "Management/Economics/Finance/Law": 4, "Agriculture & Medicine": 4, "Humanities & Social Science": 2}
+      },
+      "benefit": {
+        "tuition_and_visa": "Reimbursed through Indian Mission after joining; no advance payments",
+        "airfare": "Ministry arranges air ticket on request; return ticket only if course extended",
+        "extension_rule": "Extension beyond course duration only on university recommendation, without financial assistance",
+        "living_allowance_and_contingency_inr": null,
+        "amounts_note": "Not in documents reviewed; fill from official NOS guidelines before the demo"
+      },
+      "documents": [
+        {"id": "dob_cert", "name": "DOB proof: 10th/Matriculation certificate or Birth Certificate only", "required": true},
+        {"id": "st_cert", "name": "ST certificate (community spelling must match latest Gazette)", "required": true},
+        {"id": "pvtg_cert", "name": "PVTG certificate", "required": false},
+        {"id": "photo", "name": "Profile photo JPG/JPEG, 50-100 KB", "required": true},
+        {"id": "income_cert", "name": "Annual family income certificate", "required": true},
+        {"id": "marksheet", "name": "Masters: graduation marksheet; PhD: PG marksheet; PostDoc: PG marksheet + Ph.D award", "required": true},
+        {"id": "visa_id", "name": "Student ID and visa copy in one PDF", "required": false, "condition": "already joined"},
+        {"id": "joining_letter", "name": "University joining letter", "required": false, "condition": "already joined"},
+        {"id": "offer_letters", "name": "Offer letters merged into one PDF, highest-ranked university first", "required": false, "condition": "has offer"}
+      ],
+      "file_format_rules": "All documents PDF; photo JPG/JPEG 50-100 KB",
+      "workflow": [
+        "Register on overseas portal, fill form (save draft allowed; no edits after final submit; registration details never editable)",
+        "Selection (merit, personal interview for those without offer)",
+        "Provisional award letter issued after results",
+        "Confirmation letter only after: antecedent form, health certificate, passport, visa, caste/income verification report from State, and joining proof",
+        "Joining deadline: 2 years from provisional award, else cancelled; course change not allowed after provisional award"
+      ],
+      "ocr_deficiency_flags": [
+        "Age over limit for chosen level (32/35/38)",
+        "Marks under 55% and not already admitted to top-1000 QS university",
+        "Monthly income certificate uploaded instead of annual",
+        "DOB proof is not 10th certificate or birth certificate",
+        "Community name spelling differs from Gazette",
+        "Photo outside 50-100 KB or not JPEG; documents not PDF",
+        "CGPA marksheet without conversion formula",
+        "Income above 6,00,000"
+      ]
+    }
+  ],
+
+  "ai_assist_ideas_human_decides": [
+    "OCR extract -> auto-fill form fields -> highlight mismatches against typed values",
+    "Rule engine reads each scheme's JSON (income ceiling, age cut-off, marks, doc list) and produces a deficiency list with reasons",
+    "Cross-scheme router: given course + institute, recommend PMS vs Top Class vs NFST vs NOS and block double-claiming",
+    "Official sees AI findings with confidence + source snippet; only the official can verify / mark defective / reject / select",
+    "Plain-language deficiency notices in Hindi/regional language for the applicant"
+  ]
+}

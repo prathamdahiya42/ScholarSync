@@ -1,0 +1,178 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "scholarship.schema.json",
+  "title": "Scholarship configuration",
+  "description": "One file = one scholarship. The platform engine reads this and builds the details page, eligibility questionnaire, document upload list, AI checks, manual-review checklist and notifications. Add a new scholarship by adding a new file, no code change.",
+  "type": "object",
+  "required": ["schemaVersion", "id", "name", "status", "categoryRule", "provider", "eligibility", "questionnaire", "documents", "aiVerification", "manualVerification", "notifications"],
+  "properties": {
+    "schemaVersion": { "type": "string" },
+    "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "name": { "$ref": "#/definitions/i18n" },
+    "shortDescription": { "$ref": "#/definitions/i18n" },
+    "status": { "enum": ["active", "upcoming", "closed", "draft"] },
+    "academicYear": { "type": "string" },
+    "lastVerified": { "type": "string" },
+    "scope": { "type": "object" },
+
+    "categoryRule": {
+      "type": "object",
+      "required": ["mode"],
+      "properties": {
+        "mode": {
+          "enum": ["ST_ONLY", "OPEN_TO_ALL", "ALLOWED_LIST"],
+          "description": "ST_ONLY = only ST students. OPEN_TO_ALL = any social category. ALLOWED_LIST = only the categories in allowedCategories (e.g. [\"ST\",\"SC\"])."
+        },
+        "allowedCategories": {
+          "type": "array",
+          "items": { "enum": ["ST", "SC", "OBC", "GENERAL", "EWS", "OTHER"] }
+        },
+        "note": { "type": "string" }
+      }
+    },
+
+    "provider": {
+      "type": "object",
+      "required": ["ministry"],
+      "properties": {
+        "schemeType": { "type": "string" },
+        "ministry": { "type": "string", "description": "Who funds / owns the scheme. Use the real funder name." },
+        "implementedBy": { "type": "string" },
+        "fundingPattern": { "type": "array" },
+        "disbursal": { "type": "string" }
+      }
+    },
+    "notProviders": {
+      "type": "array",
+      "description": "Bodies students often confuse with the funder. Shown as 'Who is NOT giving this'.",
+      "items": { "type": "object", "required": ["name", "note"], "properties": { "name": { "type": "string" }, "note": { "type": "string" } } }
+    },
+
+    "eligibility": {
+      "type": "object",
+      "properties": {
+        "age": { "type": "object", "properties": { "min": { "type": ["integer", "null"] }, "max": { "type": ["integer", "null"] }, "asOnDate": { "type": "string" }, "note": { "type": "string" } } },
+        "minimumMarks": { "type": "object" },
+        "criteria": { "type": "array", "items": { "type": "object", "required": ["id", "label"], "properties": { "id": { "type": "string" }, "label": { "type": "string" }, "questionId": { "type": "string" } } } },
+        "income": { "type": "object", "properties": { "limitInr": { "type": ["number", "null"] }, "period": { "type": "string" }, "definition": { "type": "string" }, "howCounted": { "type": "array", "items": { "type": "string" } } } }
+      }
+    },
+
+    "benefits": { "type": "object" },
+    "profileQuestions": { "type": "array", "items": { "$ref": "#/definitions/question" } },
+
+    "questionnaire": {
+      "type": "object",
+      "required": ["questions"],
+      "properties": {
+        "answerType": { "const": "yesno" },
+        "resultRule": { "type": "string" },
+        "onIneligible": { "type": "string" },
+        "questions": { "type": "array", "minItems": 1, "items": { "$ref": "#/definitions/question" } }
+      }
+    },
+
+    "documents": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "required", "acceptedFormats"],
+        "properties": {
+          "id": { "type": "string" },
+          "label": { "$ref": "#/definitions/i18n" },
+          "required": { "type": "boolean" },
+          "requiredIf": { "$ref": "#/definitions/condition" },
+          "requiredUnless": { "$ref": "#/definitions/condition" },
+          "source": { "enum": ["central_guidelines", "state_guidelines", "platform_recommended"] },
+          "sourceNote": { "type": "string" },
+          "acceptedFormats": { "type": "array", "items": { "type": "string" } },
+          "maxSizeMB": { "type": "number" },
+          "studentTip": { "$ref": "#/definitions/i18n" },
+          "ocrFields": { "type": "array", "items": { "type": "string" } },
+          "privacy": { "type": "string" }
+        }
+      }
+    },
+
+    "aiVerification": {
+      "type": "object",
+      "required": ["submitGate"],
+      "properties": {
+        "purpose": { "type": "string" },
+        "statuses": { "type": "array", "items": { "enum": ["PASS", "WARN", "FAIL"] } },
+        "submitGate": { "type": "object" },
+        "imageQuality": { "type": "object" },
+        "ocr": { "type": "object" },
+        "perDocumentRules": { "type": "array" },
+        "crossDocumentChecks": { "type": "array" },
+        "studentMessageRules": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+
+    "manualVerification": {
+      "type": "object",
+      "required": ["levels", "actions"],
+      "properties": {
+        "levels": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "object", "required": ["id", "role"], "properties": { "id": { "type": "string" }, "role": { "type": "string" }, "mandatory": { "type": "boolean" }, "slaDays": { "type": "integer" }, "checklist": { "type": "array", "items": { "type": "string" } }, "rules": { "type": "array", "items": { "type": "string" } } } }
+        },
+        "actions": { "type": "array" },
+        "auditLog": { "type": "string" }
+      }
+    },
+
+    "notifications": {
+      "type": "object",
+      "required": ["events"],
+      "properties": {
+        "channelPriority": { "type": "array", "items": { "enum": ["whatsapp", "sms", "in_app"] } },
+        "events": {
+          "type": "array",
+          "items": { "type": "object", "required": ["id", "text"], "properties": { "id": { "enum": ["APPLICATION_SUBMITTED", "APPLICATION_APPROVED", "APPLICATION_DEFECTIVE", "APPLICATION_REJECTED"] }, "text": { "$ref": "#/definitions/i18n" } } }
+        },
+        "rules": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+
+    "privacy": { "type": "object" },
+    "stateOverrides": { "type": "object" },
+    "sources": { "type": "array" }
+  },
+
+  "definitions": {
+    "i18n": {
+      "type": "object",
+      "required": ["en"],
+      "properties": { "en": { "type": "string" }, "hi": { "type": "string" } },
+      "additionalProperties": { "type": "string" }
+    },
+    "condition": {
+      "type": "object",
+      "description": "Simple condition on a questionnaire/profile answer.",
+      "properties": {
+        "question": { "type": "string" },
+        "profileQuestion": { "type": "string" },
+        "equals": { "type": "string" },
+        "notEquals": { "type": "string" }
+      }
+    },
+    "question": {
+      "type": "object",
+      "required": ["id", "text"],
+      "properties": {
+        "id": { "type": "string" },
+        "text": { "$ref": "#/definitions/i18n" },
+        "helpText": { "$ref": "#/definitions/i18n" },
+        "type": { "const": "yesno" },
+        "eligibleAnswer": { "enum": ["yes", "no", null], "description": "Answer that keeps the student eligible. null = informational question." },
+        "knockout": { "type": "boolean", "description": "If true and the answer is not eligibleAnswer, the student is ineligible." },
+        "skipIf": { "$ref": "#/definitions/condition" },
+        "failMessage": { "$ref": "#/definitions/i18n" },
+        "effect": { "type": "string" }
+      }
+    }
+  }
+}

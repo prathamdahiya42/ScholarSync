@@ -1,0 +1,205 @@
+{
+  "schemaVersion": "1.0",
+  "id": "sample-merit-open-demo",
+  "name": {
+    "en": "Sample Merit Scholarship for Secondary Students (Open to All) [FICTIONAL DEMO]",
+    "hi": "माध्यमिक छात्रों के लिए नमूना मेरिट छात्रवृत्ति (सभी के लिए खुली) [काल्पनिक डेमो]"
+  },
+  "shortDescription": {
+    "en": "Demonstration scholarship open to all categories to prove generic platform capability.",
+    "hi": "सामान्य प्लेटफॉर्म क्षमता को प्रदर्शित करने के लिए सभी श्रेणियों के लिए खुला डेमो छात्रवृत्ति।"
+  },
+  "status": "active",
+  "academicYear": "2026-27",
+  "lastVerified": "2026-10-30",
+  "scope": {
+    "studyLocation": "India",
+    "levels": ["Class IX", "Class X"],
+    "applicationTypes": ["fresh"]
+  },
+  "categoryRule": {
+    "mode": "OPEN_TO_ALL",
+    "note": "Open to all categories (General, SC, ST, OBC, EWS, Other). This is a fictional demonstration scholarship."
+  },
+  "provider": {
+    "schemeType": "Demonstration Scheme",
+    "ministry": "Department of Educational Excellence (Demo Ministry)",
+    "implementedBy": "National Scholarship Demonstration Board",
+    "fundingPattern": [
+      { "appliesTo": "All States", "centrePercent": 100, "statePercent": 0 }
+    ],
+    "disbursal": "Direct Benefit Transfer to student bank account"
+  },
+  "notProviders": [
+    { "name": "Commercial Banks", "note": "This is a government-simulated merit grant, not an educational loan." }
+  ],
+  "eligibility": {
+    "age": {
+      "min": 13,
+      "max": 18,
+      "note": "Students between 13 and 18 years of age."
+    },
+    "minimumMarks": {
+      "freshApplicants": "60% or equivalent grade in prior academic year",
+      "renewal": null,
+      "note": "Minimum 60% aggregate required."
+    },
+    "criteria": [
+      { "id": "c_enrolled", "label": "Currently enrolled in Class IX or X", "questionId": "q_enrolled" },
+      { "id": "c_marks", "label": "Scored at least 60% marks in the last examination", "questionId": "q_marks" }
+    ],
+    "income": {
+      "limitInr": 800000,
+      "period": "per_year",
+      "definition": "Gross family annual income under 8 Lakhs INR.",
+      "howCounted": ["Total household annual income"]
+    }
+  },
+  "benefits": {
+    "currency": "INR",
+    "rates": {
+      "dayScholar": { "annual": 6000, "booksAndAdhocGrant": 1500 },
+      "hosteller": { "annual": 10000, "booksAndAdhocGrant": 2500 }
+    }
+  },
+  "profileQuestions": [
+    {
+      "id": "pq_hostel",
+      "text": { "en": "Are you residing in a school hostel?", "hi": "क्या आप स्कूल छात्रावास में रह रहे हैं?" },
+      "type": "yesno",
+      "eligibleAnswer": null,
+      "knockout": false
+    }
+  ],
+  "questionnaire": {
+    "answerType": "yesno",
+    "resultRule": "all_eligible_answers",
+    "questions": [
+      {
+        "id": "q_enrolled",
+        "text": { "en": "Are you currently enrolled in Class IX or X?", "hi": "क्या आप वर्तमान में कक्षा 9वीं या 10वीं में नामांकित हैं?" },
+        "type": "yesno",
+        "eligibleAnswer": "yes",
+        "knockout": true,
+        "failMessage": { "en": "This scholarship is only for Class IX and X students.", "hi": "यह छात्रवृत्ति केवल 9वीं और 10वीं कक्षा के छात्रों के लिए है।" }
+      },
+      {
+        "id": "q_marks",
+        "text": { "en": "Did you score 60% or higher in your previous year examination?", "hi": "क्या आपने अपनी पिछली कक्षा परीक्षा में 60% या उससे अधिक अंक प्राप्त किए?" },
+        "type": "yesno",
+        "eligibleAnswer": "yes",
+        "knockout": true,
+        "failMessage": { "en": "A minimum of 60% marks is required for this merit scholarship.", "hi": "इस मेरिट छात्रवृत्ति के लिए न्यूनतम 60% अंक आवश्यक हैं।" }
+      }
+    ]
+  },
+  "documents": [
+    {
+      "id": "aadhaar",
+      "label": { "en": "Aadhaar Card (Student / Parent)", "hi": "आधार कार्ड (छात्र / अभिभावक)" },
+      "required": true,
+      "acceptedFormats": ["image/jpeg", "image/png", "application/pdf"],
+      "maxSizeMB": 5,
+      "studentTip": { "en": "Ensure your name and the last 4 digits of Aadhaar are clearly visible.", "hi": "सुनिश्चित करें कि आपका नाम और आधार के अंतिम 4 अंक स्पष्ट रूप से दिखाई दे रहे हैं।" },
+      "ocrFields": ["name", "aadhaar_last_4"]
+    },
+    {
+      "id": "mark_sheet",
+      "label": { "en": "Previous Year Mark Sheet", "hi": "पिछले वर्ष की अंकतालिका" },
+      "required": true,
+      "acceptedFormats": ["image/jpeg", "image/png", "application/pdf"],
+      "maxSizeMB": 5,
+      "studentTip": { "en": "Upload clean photo of official mark sheet showing 60%+ score.", "hi": "60%+ अंक दिखाने वाली आधिकारिक मार्कशीट की स्पष्ट फोटो अपलोड करें।" },
+      "ocrFields": ["name", "percentage", "school_name"]
+    },
+    {
+      "id": "bank_proof",
+      "label": { "en": "Bank Passbook or Cancelled Cheque", "hi": "बैंक पासबुक या रद्द किया गया चेक" },
+      "required": true,
+      "acceptedFormats": ["image/jpeg", "image/png", "application/pdf"],
+      "maxSizeMB": 5,
+      "studentTip": { "en": "Upload front page showing account number and IFSC code.", "hi": "खाता संख्या और आईएफएससी कोड दर्शाने वाला पहला पृष्ठ अपलोड करें।" },
+      "ocrFields": ["bank_account_number", "ifsc_code", "holder_name"]
+    }
+  ],
+  "aiVerification": {
+    "purpose": "Verify document readability and eligibility parameters",
+    "statuses": ["PASS", "WARN", "FAIL"],
+    "submitGate": {
+      "blockOnFail": true,
+      "allowWarnWithAck": true
+    },
+    "imageQuality": {
+      "minResolution": "800x600",
+      "blurThreshold": 50,
+      "maxGlareRatio": 0.2
+    },
+    "ocr": {
+      "languages": ["eng", "hin"],
+      "minConfidence": 50
+    },
+    "perDocumentRules": [],
+    "crossDocumentChecks": [
+      {
+        "id": "name_match",
+        "description": "Student name matches across documents",
+        "sources": ["aadhaar.name", "mark_sheet.name", "bank_proof.holder_name"],
+        "warnBelow": 0.8,
+        "failBelow": 0.5
+      }
+    ],
+    "studentMessageRules": ["Always provide clear and gentle feedback"]
+  },
+  "manualVerification": {
+    "levels": [
+      {
+        "id": "l1_merit_review",
+        "role": "management_reviewer",
+        "mandatory": true,
+        "slaDays": 5,
+        "checklist": [
+          "Verify marks on uploaded mark sheet exceed 60%",
+          "Verify bank account belongs to student or guardian",
+          "Ensure no duplicate application exists"
+        ],
+        "rules": ["Double-check mark calculation"]
+      }
+    ],
+    "actions": ["approve", "mark_defective", "reject"],
+    "auditLog": "enabled"
+  },
+  "notifications": {
+    "channelPriority": ["whatsapp", "sms", "in_app"],
+    "events": [
+      {
+        "id": "APPLICATION_SUBMITTED",
+        "text": {
+          "en": "Dear {{studentName}}, your application {{applicationId}} for {{scholarshipName}} has been received.",
+          "hi": "प्रिय {{studentName}}, {{scholarshipName}} के लिए आपका आवेदन {{applicationId}} प्राप्त हो गया है।"
+        }
+      },
+      {
+        "id": "APPLICATION_APPROVED",
+        "text": {
+          "en": "Congratulations {{studentName}}! Your application {{applicationId}} for {{scholarshipName}} has been approved.",
+          "hi": "बधाई हो {{studentName}}! {{scholarshipName}} के लिए आपका आवेदन {{applicationId}} स्वीकृत कर दिया गया है।"
+        }
+      },
+      {
+        "id": "APPLICATION_DEFECTIVE",
+        "text": {
+          "en": "Dear {{studentName}}, your application {{applicationId}} needs document updates. Reason: {{reason}}",
+          "hi": "प्रिय {{studentName}}, आपके आवेदन {{applicationId}} में दस्तावेजों को सुधारने की आवश्यकता है। कारण: {{reason}}"
+        }
+      },
+      {
+        "id": "APPLICATION_REJECTED",
+        "text": {
+          "en": "Dear {{studentName}}, your application {{applicationId}} could not be approved. Reason: {{reason}}",
+          "hi": "प्रिय {{studentName}}, आपका आवेदन {{applicationId}} स्वीकृत नहीं किया जा सका। कारण: {{reason}}"
+        }
+      }
+    ],
+    "rules": ["Deliver within 5 minutes of event trigger"]
+  }
+}

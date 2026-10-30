@@ -1,0 +1,180 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Student {
+  id                String          @id @default(cuid())
+  mobile            String          @unique
+  fullName          String
+  fatherName        String
+  dob               String          // YYYY-MM-DD
+  gender            String          // male | female | other
+  email             String?
+  socialCategory    String          // ST, SC, OBC, GENERAL, EWS, OTHER
+  domicileState     String
+  district          String
+  currentClass      String          // Class IX, Class X, etc.
+  schoolName        String
+  isHosteller       Boolean         @default(false)
+  hasDisability     Boolean         @default(false)
+  disabilityType    String?
+  aadhaarLast4      String          // Strictly 4 digits only!
+  bankAccountEnc    String          // AES-256 encrypted
+  bankAccountMasked String          // e.g. XXXXXX1234
+  ifsc              String
+  bankName          String
+  bankHolderName    String
+  language          String          @default("en") // en | hi
+  guardianConsentAt DateTime?
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  applications      Application[]
+  notifications     Notification[]
+}
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String
+  name         String
+  role         String    // admin | management_reviewer
+  createdAt    DateTime  @default(now())
+}
+
+model Scholarship {
+  id           String        @id // slug e.g. "pre-matric-st-css"
+  nameJson     String        // JSON { en, hi }
+  status       String        @default("active") // active | upcoming | closed | draft
+  academicYear String        // e.g. "2026-27"
+  version      String        @default("1.0")
+  configJson   String        // Complete validated scholarship JSON
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  applications Application[]
+}
+
+model Application {
+  id                String              @id // Human ID e.g. "SCH-2026-0001"
+  studentId         String
+  scholarshipId     String
+  configVersion     String              @default("1.0")
+  type              String              @default("fresh") // fresh | renewal
+  status            String              @default("DRAFT") // ApplicationStatus
+  eligibilityResult String?             // JSON of evaluation result
+  benefitRate       String?             // JSON of computed benefit entitlement
+  defectiveNotes    String?
+  decisionReason    String?
+  decidedBy         String?
+  decidedAt         DateTime?
+  submittedAt       DateTime?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+
+  student           Student             @relation(fields: [studentId], references: [id])
+  scholarship       Scholarship         @relation(fields: [scholarshipId], references: [id])
+  answers           EligibilityAnswer[]
+  documents         Document[]
+  crossChecks       CrossCheck[]
+  reviews           Review[]
+  notifications     Notification[]
+}
+
+model EligibilityAnswer {
+  id            String      @id @default(cuid())
+  applicationId String
+  questionId    String
+  answer        String      // "yes" | "no"
+  answeredAt    DateTime    @default(now())
+
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+}
+
+model Document {
+  id            String       @id @default(cuid())
+  applicationId String
+  docTypeId     String       // e.g. "aadhaar", "income_certificate", "st_certificate"
+  storagePath   String
+  fileName      String
+  mime          String
+  sizeBytes     Int
+  version       Int          @default(1)
+  replacedById  String?
+  warnAcked     Boolean      @default(false)
+  uploadedAt    DateTime     @default(now())
+
+  application   Application  @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  aiChecks      AiCheck[]
+}
+
+model AiCheck {
+  id            String      @id @default(cuid())
+  documentId    String
+  status        String      // PASS | WARN | FAIL
+  qualityJson   String?     // Quality analysis metrics
+  ocrText       String?     // Extracted raw OCR text
+  extractedJson String?     // Extracted structured fields
+  confidence    Float       @default(0.0)
+  messagesJson  String      // Student-facing friendly messages
+  flagsJson     String      // Reviewer-facing technical inspection flags
+  createdAt     DateTime    @default(now())
+
+  document      Document    @relation(fields: [documentId], references: [id], onDelete: Cascade)
+}
+
+model CrossCheck {
+  id            String      @id @default(cuid())
+  applicationId String
+  checkId       String      // e.g. "name_match", "dob_match", "domicile_state_match"
+  status        String      // PASS | WARN | FAIL
+  detailJson    String      // Details of comparison
+  createdAt     DateTime    @default(now())
+
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+}
+
+model Review {
+  id            String      @id @default(cuid())
+  applicationId String
+  reviewerId    String
+  level         String      @default("l1_verification")
+  checklistJson String      // Saved checklist completion status
+  action        String      // approve | mark_defective | reject
+  reason        String?
+  createdAt     DateTime    @default(now())
+
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+  id                String       @id @default(cuid())
+  studentId         String
+  applicationId     String?
+  event             String       // APPLICATION_SUBMITTED, APPLICATION_APPROVED, etc.
+  channel           String       // whatsapp | sms | in_app
+  payloadJson       String
+  status            String       @default("queued") // queued | sent | delivered | failed
+  providerMessageId String?
+  createdAt         DateTime     @default(now())
+
+  student           Student      @relation(fields: [studentId], references: [id])
+  application       Application? @relation(fields: [applicationId], references: [id])
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  actorType  String   // student | reviewer | admin | system
+  actorId    String
+  action     String   // e.g. "VIEW_DOCUMENT", "APPROVE_APPLICATION", "UPLOAD_CONFIG"
+  entity     String
+  entityId   String
+  metaJson   String?
+  ip         String?
+  createdAt  DateTime @default(now())
+}

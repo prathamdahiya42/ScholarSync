@@ -1,0 +1,446 @@
+{
+  "schemaVersion": "1.0",
+  "id": "pre-matric-st-css",
+  "name": {
+    "en": "Pre-Matric Scholarship for ST Students (Classes IX & X)",
+    "hi": "अनुसूचित जनजाति (ST) विद्यार्थियों के लिए प्री-मैट्रिक छात्रवृत्ति (कक्षा IX और X)"
+  },
+  "shortDescription": {
+    "en": "Financial help for Scheduled Tribe students in Class IX and X so they stay in school and move on to higher studies.",
+    "hi": "कक्षा IX और X में पढ़ रहे अनुसूचित जनजाति के विद्यार्थियों के लिए आर्थिक सहायता, ताकि वे पढ़ाई जारी रखें और आगे बढ़ें।"
+  },
+  "status": "active",
+  "academicYear": "2026-27",
+  "lastVerified": "2026-10-30",
+  "guidelinePeriod": "2021-22 to 2025-26",
+  "scope": {
+    "studyLocation": "India",
+    "levels": ["Class IX", "Class X"],
+    "applicationTypes": ["fresh", "renewal"]
+  },
+
+  "categoryRule": {
+    "mode": "ST_ONLY",
+    "allowedCategories": ["ST"],
+    "note": "Only Scheduled Tribe students of their domicile State/UT. General, OBC, SC and other categories must not see this scholarship as applicable."
+  },
+
+  "provider": {
+    "schemeType": "Centrally Sponsored Scheme (CSS)",
+    "ministry": "Ministry of Tribal Affairs, Government of India",
+    "implementedBy": "State / UT governments. The student's DOMICILE State/UT awards, verifies and pays the scholarship.",
+    "fundingPattern": [
+      { "appliesTo": "Default (most States/UTs)", "centrePercent": 75, "statePercent": 25 },
+      { "appliesTo": "North-East and hilly States", "centrePercent": 90, "statePercent": 10 },
+      { "appliesTo": "UTs without a legislature and own grants (e.g. Andaman & Nicobar)", "centrePercent": 100, "statePercent": 0 }
+    ],
+    "disbursal": "Direct Benefit Transfer (DBT) into the student's Aadhaar-linked bank account"
+  },
+  "notProviders": [
+    { "name": "Ministry of Social Justice & Empowerment", "note": "Runs separate pre-matric schemes for other categories (e.g. SC/OBC). Not the funder of this ST scheme." },
+    { "name": "Ministry of Minority Affairs", "note": "Runs a separate pre-matric scheme for notified minorities. A student cannot hold two scholarships at once." },
+    { "name": "National Scholarship Portal (NSP)", "note": "Only an application / verification / payment-channel portal that some States use. It is NOT a funder." },
+    { "name": "School / Institute", "note": "Verifies the application through its Institute Nodal Officer. Does not fund it." },
+    { "name": "This platform", "note": "Helps students check eligibility and prepare documents, and helps management verify them. It does not fund or finally award the scholarship." }
+  ],
+
+  "eligibility": {
+    "age": {
+      "min": null,
+      "max": null,
+      "note": "The Ministry guidelines set NO minimum or maximum age. A State may add its own rule via stateOverrides."
+    },
+    "minimumMarks": {
+      "freshApplicants": null,
+      "renewal": "Student must have passed Class IX to renew the scholarship for Class X.",
+      "note": "No minimum-percentage requirement for fresh applicants in the Ministry guidelines."
+    },
+    "criteria": [
+      { "id": "c_st", "label": "Belongs to a Scheduled Tribe as notified for the State/UT of domicile", "questionId": "q_st" },
+      { "id": "c_class", "label": "Currently studying in Class IX or Class X", "questionId": "q_class" },
+      { "id": "c_school", "label": "Studying in a Government school or a school recognised by the Government or a Central/State Board of Secondary Education", "questionId": "q_school" },
+      { "id": "c_income", "label": "Family income from all sources not more than Rs. 2,50,000 per year (not applicable to an orphan supported by a guardian)", "questionId": "q_income" },
+      { "id": "c_bank", "label": "Has a valid account in a Scheduled Bank linked with Aadhaar and mobile number", "questionId": "q_bank" },
+      { "id": "c_other", "label": "Not receiving any other scholarship", "questionId": "q_other" },
+      { "id": "c_repeat", "label": "Has not already received this scholarship for the same class (a repeated class is not paid twice)", "questionId": "q_repeat" },
+      { "id": "c_renew", "label": "For renewal in Class X: passed Class IX", "questionId": "q_passed_ix" }
+    ],
+    "income": {
+      "limitInr": 250000,
+      "period": "per_year",
+      "definition": "Gross income from all sources, without any exemption or deduction allowed under the Income Tax Act.",
+      "howCounted": [
+        "If both father and mother work: combined income of both.",
+        "If only one parent is alive: that parent's income only.",
+        "Income of any other earning family member (sibling etc.) is NOT included.",
+        "Orphan supported by a guardian: income criterion does not apply."
+      ],
+      "orphanExempt": true,
+      "certificate": {
+        "requiredOnce": true,
+        "validForClasses": ["IX", "X"],
+        "mustBeTakenInYearOfAdmission": true,
+        "salariedParentUsesPreviousFinancialYear": true,
+        "selfDeclarationOrAffidavitAccepted": false,
+        "issuingAuthority": "Competent authority notified by the State/UT (set per State in stateOverrides)"
+      }
+    }
+  },
+
+  "benefits": {
+    "currency": "INR",
+    "scholarshipMonths": 10,
+    "rates": {
+      "dayScholar": { "monthly": 225, "annual": 2250, "booksAndAdhocGrant": 750 },
+      "hosteller": { "monthly": 525, "annual": 5250, "booksAndAdhocGrant": 1000 }
+    },
+    "disabilityAllowance": {
+      "appliesTo": ["Divyangjan (disability certified by competent medical authority)", "Leprosy-cured", "Sickle cell anaemia", "Thalassemia"],
+      "certificateRequired": true,
+      "months": 12,
+      "hosteller": { "monthly": 800, "annual": 9600 },
+      "dayScholar": { "monthly": 600, "annual": 7200 }
+    },
+    "renewal": "Award continues subject to good conduct and regular attendance; renewed for Class X after passing Class IX.",
+    "note": "Rates are from the Ministry guidelines. Some States pay different amounts - use stateOverrides."
+  },
+
+  "profileQuestions": [
+    {
+      "id": "p_hostel",
+      "text": { "en": "Do you live in a hostel?", "hi": "क्या आप हॉस्टल में रहते हैं?" },
+      "type": "yesno",
+      "effect": "Sets benefit rate to hosteller if yes, day scholar if no."
+    },
+    {
+      "id": "p_disability",
+      "text": {
+        "en": "Do you have a disability, or are you leprosy-cured, or do you have sickle cell anaemia or thalassemia?",
+        "hi": "क्या आपको कोई दिव्यांगता है, या आप कुष्ठ रोग से ठीक हुए हैं, या आपको सिकल सेल एनीमिया या थैलेसीमिया है?"
+      },
+      "type": "yesno",
+      "effect": "If yes, the disability_certificate document becomes required and the extra allowance is shown."
+    }
+  ],
+
+  "questionnaire": {
+    "answerType": "yesno",
+    "resultRule": "ELIGIBLE only if every non-skipped knockout question has the answer equal to eligibleAnswer.",
+    "onIneligible": "Show the failMessage of each failed question in simple language, and suggest other scholarships from the catalog that the student may qualify for. Never silently block.",
+    "questions": [
+      {
+        "id": "q_st",
+        "text": { "en": "Do you belong to a Scheduled Tribe (ST) of the State/UT where you are a permanent resident?", "hi": "क्या आप उस राज्य/केंद्र शासित प्रदेश की अनुसूचित जनजाति (ST) से हैं जहाँ आपका स्थायी निवास है?" },
+        "eligibleAnswer": "yes",
+        "knockout": true,
+        "failMessage": { "en": "This scholarship is only for Scheduled Tribe (ST) students.", "hi": "यह छात्रवृत्ति केवल अनुसूचित जनजाति (ST) विद्यार्थियों के लिए है।" }
+      },
+      {
+        "id": "q_class",
+        "text": { "en": "Are you studying in Class IX or Class X this year?", "hi": "क्या आप इस वर्ष कक्षा IX या कक्षा X में पढ़ रहे हैं?" },
+        "eligibleAnswer": "yes",
+        "knockout": true,
+        "failMessage": { "en": "This scholarship is only for Class IX and X. Students in Class XI and above should look at the Post-Matric scholarship.", "hi": "यह छात्रवृत्ति केवल कक्षा IX और X के लिए है। कक्षा XI और उससे ऊपर के विद्यार्थी पोस्ट-मैट्रिक छात्रवृत्ति देखें।" }
+      },
+      {
+        "id": "q_school",
+        "text": { "en": "Is your school a government school, or recognised by the Government or a Central/State Board of Secondary Education?", "hi": "क्या आपका स्कूल सरकारी है, या सरकार या केंद्रीय/राज्य माध्यमिक शिक्षा बोर्ड से मान्यता प्राप्त है?" },
+        "eligibleAnswer": "yes",
+        "knockout": true,
+        "failMessage": { "en": "The school must be a government school or a recognised school.", "hi": "स्कूल सरकारी या मान्यता प्राप्त होना चाहिए।" }
+      },
+      {
+        "id": "q_orphan",
+        "text": { "en": "Are you an orphan being looked after by a guardian?", "hi": "क्या आप अनाथ हैं और किसी अभिभावक की देखरेख में हैं?" },
+        "eligibleAnswer": null,
+        "knockout": false,
+        "effect": "If yes: skip q_income and do not ask for the income_certificate."
+      },
+      {
+        "id": "q_income",
+        "text": {
+          "en": "Is your family's total income from ALL sources (father and mother together, if both earn) Rs. 2,50,000 per year or less?",
+          "hi": "क्या आपके परिवार की सभी स्रोतों से कुल वार्षिक आय (यदि माता-पिता दोनों कमाते हैं तो दोनों की मिलाकर) ₹2,50,000 या उससे कम है?"
+        },
+        "helpText": { "en": "Count gross income without tax deductions. Income of brothers/sisters or other relatives is not counted.", "hi": "आयकर में छूट/कटौती के बिना कुल आय गिनें। भाई-बहन या अन्य रिश्तेदारों की आय नहीं गिनी जाती।" },
+        "skipIf": { "question": "q_orphan", "equals": "yes" },
+        "eligibleAnswer": "yes",
+        "knockout": true,
+        "failMessage": { "en": "Family income must not be more than Rs. 2,50,000 per year.", "hi": "परिवार की वार्षिक आय ₹2,50,000 से अधिक नहीं होनी चाहिए।" }
+      },
+      {
+        "id": "q_bank",
+        "text": { "en": "Do you (or your parent) have a bank account in your/their name in a Scheduled Bank, linked with Aadhaar and your mobile number?", "hi": "क्या आपके या आपके माता-पिता के नाम पर किसी अनुसूचित बैंक में खाता है जो आधार और मोबाइल नंबर से जुड़ा है?" },
+        "eligibleAnswer": "yes",
+        "knockout": true,
+        "failMessage": { "en": "You need an active bank account linked to Aadhaar and mobile so the money can be sent by DBT. Please get it linked first.", "hi": "DBT से पैसा भेजने के लिए आधार और मोबाइल से जुड़ा सक्रिय बैंक खाता ज़रूरी है। कृपया पहले खाता लिंक करवाएँ।" }
+      },
+      {
+        "id": "q_other",
+        "text": { "en": "Are you currently receiving any other scholarship?", "hi": "क्या आपको अभी कोई अन्य छात्रवृत्ति मिल रही है?" },
+        "eligibleAnswer": "no",
+        "knockout": true,
+        "failMessage": { "en": "A student cannot receive another scholarship together with this one.", "hi": "इस छात्रवृत्ति के साथ कोई अन्य छात्रवृत्ति नहीं ली जा सकती।" }
+      },
+      {
+        "id": "q_repeat",
+        "text": { "en": "Have you already received this scholarship for the same class you are in now (for example because you are repeating the class)?", "hi": "क्या आप जिस कक्षा में अभी हैं उसी के लिए यह छात्रवृत्ति पहले ले चुके हैं (जैसे कक्षा दोहराने के कारण)?" },
+        "eligibleAnswer": "no",
+        "knockout": true,
+        "failMessage": { "en": "The scholarship is paid only once for a class. You can apply again when you are promoted to the next class.", "hi": "एक कक्षा के लिए छात्रवृत्ति केवल एक बार मिलती है। अगली कक्षा में जाने पर आप फिर आवेदन कर सकते हैं।" }
+      },
+      {
+        "id": "q_prev_awardee",
+        "text": { "en": "Did you receive this scholarship last year in Class IX?", "hi": "क्या आपको पिछले वर्ष कक्षा IX में यह छात्रवृत्ति मिली थी?" },
+        "eligibleAnswer": null,
+        "knockout": false,
+        "effect": "If yes (and now in Class X): applicationType = renewal and q_passed_ix is asked. Otherwise applicationType = fresh."
+      },
+      {
+        "id": "q_passed_ix",
+        "text": { "en": "Did you pass Class IX?", "hi": "क्या आप कक्षा IX में उत्तीर्ण हुए हैं?" },
+        "skipIf": { "question": "q_prev_awardee", "notEquals": "yes" },
+        "eligibleAnswer": "yes",
+        "knockout": true,
+        "failMessage": { "en": "Renewal for Class X needs you to have passed Class IX.", "hi": "कक्षा X के लिए नवीनीकरण हेतु कक्षा IX में उत्तीर्ण होना आवश्यक है।" }
+      }
+    ]
+  },
+
+  "documents": [
+    {
+      "id": "aadhaar",
+      "label": { "en": "Aadhaar card", "hi": "आधार कार्ड" },
+      "required": true,
+      "source": "central_guidelines",
+      "acceptedFormats": ["pdf", "jpg", "jpeg", "png"],
+      "maxSizeMB": 5,
+      "studentTip": { "en": "Take a flat, well-lit photo of the front. All four corners must be visible.", "hi": "सीधी, अच्छी रोशनी वाली फोटो लें। चारों कोने दिखने चाहिए।" },
+      "ocrFields": ["fullName", "dob", "gender", "aadhaarLast4"],
+      "privacy": "Store ONLY the last 4 digits of the Aadhaar number. Mask the rest in all UI, logs and exports."
+    },
+    {
+      "id": "domicile",
+      "label": { "en": "Domicile / permanent residence certificate", "hi": "निवास प्रमाण पत्र (डोमिसाइल)" },
+      "required": true,
+      "source": "central_guidelines",
+      "acceptedFormats": ["pdf", "jpg", "jpeg", "png"],
+      "maxSizeMB": 5,
+      "ocrFields": ["fullName", "fatherName", "state", "district", "issuingAuthority", "issueDate", "certificateNumber"]
+    },
+    {
+      "id": "st_certificate",
+      "label": { "en": "Scheduled Tribe (ST) certificate", "hi": "अनुसूचित जनजाति (ST) प्रमाण पत्र" },
+      "required": true,
+      "source": "central_guidelines",
+      "acceptedFormats": ["pdf", "jpg", "jpeg", "png"],
+      "maxSizeMB": 5,
+      "studentTip": { "en": "It must be issued by the competent authority of your State. The community name must be clearly readable.", "hi": "यह आपके राज्य के सक्षम प्राधिकारी द्वारा जारी होना चाहिए। समुदाय का नाम साफ़ पढ़ा जाना चाहिए।" },
+      "ocrFields": ["fullName", "fatherName", "community", "state", "issuingAuthority", "issueDate", "certificateNumber"]
+    },
+    {
+      "id": "income_certificate",
+      "label": { "en": "Family income certificate", "hi": "पारिवारिक आय प्रमाण पत्र" },
+      "required": true,
+      "requiredUnless": { "question": "q_orphan", "equals": "yes" },
+      "source": "central_guidelines",
+      "acceptedFormats": ["pdf", "jpg", "jpeg", "png"],
+      "maxSizeMB": 5,
+      "studentTip": { "en": "A self-declaration or affidavit is NOT accepted. It must be issued by the authority your State has notified (for example Tehsildar). Take it once at admission to Class IX; it stays valid for Class X.", "hi": "स्व-घोषणा या शपथपत्र मान्य नहीं है। यह आपके राज्य द्वारा अधिसूचित प्राधिकारी (जैसे तहसीलदार) से होना चाहिए। कक्षा IX के प्रवेश पर एक बार बनवाएँ; यह कक्षा X के लिए भी मान्य रहेगा।" },
+      "ocrFields": ["fullName", "fatherName", "annualIncomeInr", "issuingAuthority", "issueDate", "certificateNumber"]
+    },
+    {
+      "id": "disability_certificate",
+      "label": { "en": "Disability / medical certificate", "hi": "दिव्यांगता / चिकित्सा प्रमाण पत्र" },
+      "required": false,
+      "requiredIf": { "profileQuestion": "p_disability", "equals": "yes" },
+      "source": "central_guidelines",
+      "acceptedFormats": ["pdf", "jpg", "jpeg", "png"],
+      "maxSizeMB": 5,
+      "studentTip": { "en": "Must be issued by a competent medical authority of the State/UT.", "hi": "यह राज्य/केंद्र शासित प्रदेश के सक्षम चिकित्सा प्राधिकारी द्वारा जारी होना चाहिए।" },
+      "ocrFields": ["fullName", "condition", "issuingAuthority", "issueDate"]
+    },
+    {
+      "id": "photo",
+      "label": { "en": "Passport-size photograph", "hi": "पासपोर्ट साइज़ फोटो" },
+      "required": true,
+      "source": "central_guidelines",
+      "acceptedFormats": ["jpg", "jpeg", "png"],
+      "maxSizeMB": 1,
+      "studentTip": { "en": "Plain background, face clearly visible, no filters.", "hi": "सादा पृष्ठभूमि, चेहरा साफ़ दिखे, कोई फ़िल्टर नहीं।" },
+      "ocrFields": []
+    },
+    {
+      "id": "bank_proof",
+      "label": { "en": "Bank passbook first page (or cancelled cheque)", "hi": "बैंक पासबुक का पहला पन्ना (या कैंसल चेक)" },
+      "required": true,
+      "source": "platform_recommended",
+      "sourceNote": "The guidelines require correct bank details (account number, IFSC) in the application. This platform asks for proof so management can cross-check them.",
+      "acceptedFormats": ["pdf", "jpg", "jpeg", "png"],
+      "maxSizeMB": 5,
+      "ocrFields": ["accountHolderName", "accountNumber", "ifsc", "bankName"]
+    },
+    {
+      "id": "school_proof",
+      "label": { "en": "School ID card or bonafide certificate (shows Class IX/X)", "hi": "स्कूल आईडी कार्ड या बोनाफाइड प्रमाण पत्र (कक्षा IX/X दर्शाता हो)" },
+      "required": true,
+      "source": "platform_recommended",
+      "sourceNote": "Lets management confirm current class and school. The school's Institute Nodal Officer also verifies in the real State process.",
+      "acceptedFormats": ["pdf", "jpg", "jpeg", "png"],
+      "maxSizeMB": 5,
+      "ocrFields": ["fullName", "schoolName", "className", "academicYear"]
+    }
+  ],
+
+  "aiVerification": {
+    "purpose": "Quality and consistency screening only. The AI never approves, rejects or judges authenticity. It only decides whether the student may press Submit.",
+    "statuses": ["PASS", "WARN", "FAIL"],
+    "submitGate": {
+      "requireAllRequiredDocuments": true,
+      "blockOn": ["FAIL"],
+      "allowWarnWithStudentAcknowledgement": true
+    },
+    "imageQuality": {
+      "note": "Default thresholds - tune with real phone photos.",
+      "maxFileSizeMB": 5,
+      "minWidthPx": 800,
+      "minHeightPx": 600,
+      "blur": { "method": "laplacian_variance", "warnBelow": 100, "failBelow": 60 },
+      "brightness": { "failBelow": 40, "failAbove": 240 },
+      "glareMaxRatio": 0.08,
+      "pdf": { "maxPages": 5, "rejectPasswordProtected": true },
+      "detectCroppedEdges": true
+    },
+    "ocr": {
+      "languages": ["eng", "hin"],
+      "avgConfidence": { "warnBelow": 0.6, "failBelow": 0.4 }
+    },
+    "perDocumentRules": [
+      { "doc": "aadhaar", "checks": ["name_present", "dob_present", "aadhaar_last4_present"] },
+      { "doc": "domicile", "checks": ["name_present", "state_present", "issuing_authority_present", "stamp_or_signature_region_detected"] },
+      { "doc": "st_certificate", "checks": ["name_present", "community_present", "state_present", "issuing_authority_present", "stamp_or_signature_region_detected"], "manualFlag": "Management must confirm the community name matches the official ST list of the domicile State." },
+      { "doc": "income_certificate", "checks": ["name_present", "annual_income_present", "issuing_authority_present", "issue_date_present"], "failIf": ["document_is_self_declaration_or_affidavit", "annualIncomeInr > 250000"], "warnIf": ["issue_date_not_in_admission_year", "income_label_is_monthly"] },
+      { "doc": "disability_certificate", "checks": ["name_present", "issuing_authority_present"] },
+      { "doc": "photo", "checks": ["exactly_one_face_detected", "face_not_blurred"] },
+      { "doc": "bank_proof", "checks": ["account_number_present", "ifsc_valid_format", "holder_name_present"] },
+      { "doc": "school_proof", "checks": ["name_present", "school_name_present", "class_is_IX_or_X"] }
+    ],
+    "crossDocumentChecks": [
+      { "id": "name_match", "fields": ["fullName"], "docs": ["aadhaar", "domicile", "st_certificate", "income_certificate", "school_proof"], "similarity": { "warnBelow": 0.85, "failBelow": 0.6 }, "note": "Fuzzy match, ignore case/spacing/initials, handle Hindi-English transliteration." },
+      { "id": "father_name_match", "fields": ["fatherName"], "docs": ["domicile", "st_certificate", "income_certificate"], "similarity": { "warnBelow": 0.85, "failBelow": 0.6 } },
+      { "id": "state_match", "fields": ["state"], "docs": ["domicile", "st_certificate"], "mustEqualProfile": "domicileState" },
+      { "id": "dob_match", "fields": ["dob"], "docs": ["aadhaar"], "mustEqualProfile": "dob" },
+      { "id": "bank_holder_match", "fields": ["accountHolderName"], "docs": ["bank_proof"], "mustMatchStudentOrParent": true },
+      { "id": "bank_details_match", "fields": ["accountNumber", "ifsc"], "docs": ["bank_proof"], "mustEqualProfile": "bankDetails" }
+    ],
+    "studentMessageRules": [
+      "Messages are short, in the student's language, and say exactly what to fix (for example: 'The photo is blurry. Hold the phone steady and retake.').",
+      "Never show raw OCR errors or confidence numbers to the student.",
+      "The student can replace a document any number of times before submitting."
+    ]
+  },
+
+  "manualVerification": {
+    "levels": [
+      {
+        "id": "L1_MANAGEMENT",
+        "role": "management_reviewer",
+        "mandatory": true,
+        "slaDays": 7,
+        "checklist": [
+          "Student category is ST and the ST certificate is genuine, legible and issued by a competent authority",
+          "Community name matches the official ST list of the domicile State",
+          "Domicile certificate matches the claimed domicile State/UT",
+          "Income certificate is from the notified authority, in the correct year, and income is within Rs. 2,50,000 (or student is a certified orphan)",
+          "Name, father's name and date of birth are consistent across all documents",
+          "School ID / bonafide confirms Class IX or X in a recognised school",
+          "Bank account details match the bank proof and the account holder is the student or parent",
+          "Disability certificate (if claimed) is from a competent medical authority",
+          "No other scholarship declared; not repeating a paid class"
+        ],
+        "rules": [
+          "A reviewer must open every document and tick every checklist item before Approve is enabled.",
+          "Mark Defective or Reject requires a written reason shown to the student.",
+          "AI WARN flags are shown next to the relevant document so the reviewer looks at them first."
+        ]
+      },
+      {
+        "id": "L2_DISTRICT_STATE",
+        "role": "district_state_officer",
+        "mandatory": false,
+        "note": "Optional second level (the real process has Institute, then District/State verification). Off by default in the demo."
+      }
+    ],
+    "actions": [
+      { "id": "approve", "effect": "status -> APPROVED, student profile updated, notification sent" },
+      { "id": "mark_defective", "effect": "status -> DEFECTIVE, student can fix the listed documents and resubmit" },
+      { "id": "reject", "effect": "status -> REJECTED with reason (final for this cycle)" }
+    ],
+    "auditLog": "Every view, decision, reason and timestamp is stored with the reviewer id."
+  },
+
+  "notifications": {
+    "channelPriority": ["whatsapp", "sms"],
+    "fallbackToSmsIfWhatsappFails": true,
+    "recipient": "Registered mobile number of the student",
+    "languagePreference": "student_language",
+    "events": [
+      {
+        "id": "APPLICATION_SUBMITTED",
+        "text": {
+          "en": "Hello {{studentName}}, your application {{applicationId}} for {{scholarshipName}} has been submitted and sent for verification. We will update you soon.",
+          "hi": "नमस्ते {{studentName}}, {{scholarshipName}} के लिए आपका आवेदन {{applicationId}} जमा हो गया है और सत्यापन के लिए भेज दिया गया है। हम जल्द सूचित करेंगे।"
+        }
+      },
+      {
+        "id": "APPLICATION_APPROVED",
+        "text": {
+          "en": "Hello {{studentName}}, your documents for {{scholarshipName}} (application {{applicationId}}) have been verified and your application has been submitted successfully.",
+          "hi": "नमस्ते {{studentName}}, {{scholarshipName}} (आवेदन {{applicationId}}) के आपके दस्तावेज़ सत्यापित हो गए हैं और आपका आवेदन सफलतापूर्वक जमा हो गया है।"
+        }
+      },
+      {
+        "id": "APPLICATION_DEFECTIVE",
+        "text": {
+          "en": "Hello {{studentName}}, your application {{applicationId}} needs a correction: {{reason}}. Please log in, fix it and submit again.",
+          "hi": "नमस्ते {{studentName}}, आपके आवेदन {{applicationId}} में सुधार चाहिए: {{reason}}। कृपया लॉग इन करके ठीक करें और दोबारा जमा करें।"
+        }
+      },
+      {
+        "id": "APPLICATION_REJECTED",
+        "text": {
+          "en": "Hello {{studentName}}, your application {{applicationId}} could not be accepted: {{reason}}. Log in to see details.",
+          "hi": "नमस्ते {{studentName}}, आपका आवेदन {{applicationId}} स्वीकार नहीं किया जा सका: {{reason}}। विवरण के लिए लॉग इन करें।"
+        }
+      }
+    ],
+    "rules": [
+      "Never put Aadhaar, income or bank details in a message.",
+      "WhatsApp business-initiated messages must use pre-approved templates; the text above is the template body.",
+      "Always also show the notification inside the student's account."
+    ]
+  },
+
+  "privacy": {
+    "studentsAreMinors": true,
+    "parentOrGuardianConsentRequired": true,
+    "aadhaarStorage": "last4_only",
+    "encryptionAtRest": true,
+    "accessLogging": true,
+    "consentText": {
+      "en": "I (parent/guardian) allow my child's details and documents to be used only to check and process this scholarship application.",
+      "hi": "मैं (माता-पिता/अभिभावक) अपने बच्चे की जानकारी और दस्तावेज़ों का उपयोग केवल इस छात्रवृत्ति आवेदन की जाँच और प्रक्रिया के लिए करने की अनुमति देता/देती हूँ।"
+    }
+  },
+
+  "stateOverrides": {
+    "note": "The real scheme is run by each State/UT. Portal, deadlines, income-issuing authority, extra documents and even amounts can differ. Admin can add a State block here without touching code.",
+    "overridableFields": ["portalUrl", "applicationWindow", "incomeCertificateAuthority", "extraDocuments", "benefitRates", "extraEligibilityRules"],
+    "states": {}
+  },
+
+  "sources": [
+    { "title": "Ministry of Tribal Affairs - Guidelines, Pre-Matric Scholarship for ST students (Classes IX & X), CSS, 2021-22 to 2025-26", "url": "https://twd.tripura.gov.in/sites/default/files/Revised_Guidelines_0.pdf" },
+    { "title": "Ministry of Tribal Affairs - Scholarship schemes page", "url": "https://tribal.nic.in/ScholarshiP.aspx" }
+  ]
+}
