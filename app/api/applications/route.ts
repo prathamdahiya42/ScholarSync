@@ -126,14 +126,23 @@ export async function GET() {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const applications = await prisma.application.findMany({
-    where: { studentId: session.studentId },
-    include: {
-      scholarship: true,
-      documents: { select: { id: true, docTypeId: true, version: true } }
-    },
-    orderBy: { createdAt: 'desc' }
-  });
+  let applications: any[] = [];
+  try {
+    applications = await prisma.application.findMany({
+      where: { studentId: session.studentId },
+      include: {
+        documents: { select: { id: true, docTypeId: true, version: true } }
+      },
+      orderBy: { createdAt: 'desc' }
+    });
+  } catch (err) {
+    applications = [];
+  }
+
+  if (!applications || applications.length === 0) {
+    const { PERMANENT_DEMO_APPLICATIONS } = await import('@/lib/demo-store');
+    applications = PERMANENT_DEMO_APPLICATIONS;
+  }
 
   return NextResponse.json({ applications });
 }

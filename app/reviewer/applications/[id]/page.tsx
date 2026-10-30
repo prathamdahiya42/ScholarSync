@@ -49,26 +49,47 @@ export default function ReviewerInspectionWorkspacePage() {
           router.push('/login');
           return null;
         }
+        if (!res.ok) {
+          throw new Error(`Server returned ${res.status}`);
+        }
         return res.json();
       })
       .then((resData) => {
-        if (resData && !resData.error) {
+        if (resData && !resData.error && resData.application) {
           setData(resData);
           if (resData.application.documents?.length > 0) {
             const firstId = resData.application.documents[0].id;
             setSelectedDocId(firstId);
             setViewedDocIds([firstId]);
           }
+        } else if (resData?.error) {
+          toast.error(resData.error);
         }
       })
-      .catch((err) => toast.error('Failed to load application'))
+      .catch((err) => toast.error(err.message || 'Failed to load application'))
       .finally(() => setLoading(false));
   }, [id, router]);
 
-  if (loading || !data) {
+  if (loading) {
     return (
       <div className="max-w-6xl mx-auto py-12 text-center text-slate-500">
         Loading reviewer inspection workspace...
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className="max-w-md mx-auto my-16 p-8 bg-white border border-slate-200 rounded-3xl text-center space-y-4 shadow-sm">
+        <AlertTriangle className="w-10 h-10 text-amber-500 mx-auto" />
+        <h2 className="text-base font-bold text-slate-900">Application Unavailable</h2>
+        <p className="text-xs text-slate-500">Unable to load the requested application records.</p>
+        <button
+          onClick={() => router.push('/reviewer/queue')}
+          className="px-4 py-2 bg-[#D62828] text-white text-xs font-semibold rounded-xl hover:bg-[#B91C1C] transition-colors"
+        >
+          Back to Verification Queue
+        </button>
       </div>
     );
   }
