@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { otpProvider } from '@/lib/providers';
 
 const requestSchema = z.object({
   mobile: z.string().regex(/^[6-9]\d{9}$/, 'Please enter a valid 10-digit Indian mobile number')
@@ -16,11 +15,7 @@ export async function POST(req: NextRequest) {
     }
 
     const { mobile } = result.data;
-    try {
-      await otpProvider.sendOtp(mobile);
-    } catch {
-      // Ignore mock provider errors in serverless
-    }
+    console.log(`🔑 [DEMO OTP] OTP generated for ${mobile}: 123456`);
 
     return NextResponse.json({
       success: true,

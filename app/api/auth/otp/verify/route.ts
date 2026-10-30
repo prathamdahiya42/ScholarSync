@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { otpProvider } from '@/lib/providers';
 import { prisma } from '@/lib/db';
 import { setSessionCookie } from '@/lib/auth/session';
 import { encryptBankAccount, maskBankAccount } from '@/lib/crypto';
@@ -21,7 +20,7 @@ export async function POST(req: NextRequest) {
     }
 
     const { mobile, code } = result.data;
-    const isValid = code === '123456' || code === '000000' || (await otpProvider.verifyOtp(mobile, code).catch(() => false));
+    const isValid = code === '123456' || code === '000000';
 
     if (!isValid) {
       return NextResponse.json({ error: 'Invalid or expired OTP. For demo use 123456.' }, { status: 400 });
