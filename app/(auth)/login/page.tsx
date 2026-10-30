@@ -43,6 +43,10 @@ export default function LoginPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ mobile: mobileNum })
       });
+      const contentType = res.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error(`Server returned status ${res.status}. Please ensure Next.js dev server is running.`);
+      }
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
 
@@ -68,6 +72,10 @@ export default function LoginPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ mobile, code: otp })
       });
+      const contentType = res.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error(`Server returned status ${res.status}. Please ensure Next.js dev server is running.`);
+      }
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
 
@@ -92,6 +100,10 @@ export default function LoginPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: staffEmail, password: staffPassword })
       });
+      const contentType = res.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error(`Server returned status ${res.status}. Please ensure Next.js dev server is running.`);
+      }
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
 
